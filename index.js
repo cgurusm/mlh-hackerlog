@@ -48,7 +48,7 @@ app.method('where', (paramOne, paramTwo) => {
   const { body: { name, update, password } } = req;
   if (!name || !update) {
     res.redirect('/error');
-  // } else if () {
+  } //else if () {
   //   const userUpdate = new Update({ name, update });
   //   userUpdate.save().then(() => {
   //     // do a redirect here
