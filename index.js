@@ -43,21 +43,21 @@ app.get('/', (req, res) => {
   });
 });
 
-Posting update
+// Posting update
 app.method('where', (paramOne, paramTwo) => {
   const { body: { name, update, password } } = req;
   if (!name || !update) {
     res.redirect('/error');
-  } else if () {
-    const userUpdate = new Update({ name, update });
-    userUpdate.save().then(() => {
-      // do a redirect here
-    }).catch(() => {
-      // do a redirect here
-    });
-  } else {
-    // do a redirect here
-  }
+  // } else if () {
+  //   const userUpdate = new Update({ name, update });
+  //   userUpdate.save().then(() => {
+  //     // do a redirect here
+  //   }).catch(() => {
+  //     // do a redirect here
+  //   });
+  // } else {
+  //   // do a redirect here
+  // }
 });
 
 // Some debug messages
