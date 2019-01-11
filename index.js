@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const moment = require('moment');
+const dotenv = require('dotenv').config();
 const app = express();
 
 // Setup express
@@ -13,7 +14,7 @@ app.use(bodyParser.json());
 
 // Get env variables
 const port = process.env.PORT || 3000;
-const perPage = process.env.PAGE_SIZE || 10;
+const perPage = process.env.PAGE_SIZE || 15;
 const mongoUrl = process.env.MONGODB_URI || 'mongodb://mlh-localhost:uSI0Ir6tQg5qtj4Ao485wmlrCFDHmkMTqcrkhLuD9mRHkfj6NIkdB9Q0iZf5xXDzkmeWamyfmf89DW2a1fGC4g==@mlh-localhost.documents.azure.com:10255/mlh-localhost?ssl=true&replicaSet=globaldb';
 const defaultPassword = process.env.HACKERLOG_PASSWORD || 'P@ssw0rd!';
 
@@ -25,7 +26,6 @@ const updateSchema = mongoose.Schema({
   timestamps: true
 });
 const Update = mongoose.model('update', updateSchema);
-
 
 // Routes
 app.get('/', (req, res) => {
@@ -44,21 +44,28 @@ app.get('/', (req, res) => {
 });
 
 // Posting update
-// app.method('where', (paramOne, paramTwo) => {
-//   const { body: { name, update, password } } = req;
-//   if (!name || !update) {
-//     res.redirect('/error');
-//   } //else if () {
-//   //   const userUpdate = new Update({ name, update });
-//   //   userUpdate.save().then(() => {
-//   //     // do a redirect here
-//   //   }).catch(() => {
-//   //     // do a redirect here
-//   //   });
-//   // } else {
-//   //   // do a redirect here
-//   // }
-// });
+app.post('/update', (req, res) => {
+  const { body: { name, update, password } } = req;
+  /**
+   * Same as const name = req.body.name
+   * const update = req.body.update
+   * const password = req.body.password
+   */
+  if (!name || !update) {
+  } else if (password == defaultPassword) {
+    const userUpdate = new Update({ name, update });
+    userUpdate.save().then(() => {
+      // do a redirect here
+      res.redirect('/');
+    }).catch(() => {
+      // do a redirect here
+      res.redirect('/error');
+    });
+  } else {
+    // do a redirect here
+    res.redirect('/?wrongPassword=true');
+  }
+});
 
 // Some debug messages
 console.log("Starting app..");
